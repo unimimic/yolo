@@ -15,8 +15,8 @@ task = 'train'
 if __name__ == "__main__":
   if task == 'train':
     # Load a model
-    model = YOLO("./models/yolo11n.yaml").load("./models/yolo11n.pt")  # build from YAML and transfer weights
-    # model = YOLO("yolov8n.pt") 
+    model = YOLO("./models/yolo11n.pt") # load a pretrained model (recommended for training)
+    # model = YOLO("./models/yolov8n.pt") 
 
     # Train the model with MPS
     results = model.train(
