@@ -1,12 +1,16 @@
 from ultralytics import YOLO
 import torch
-torch.cuda.set_device(0)
+import sys
+
+if sys.platform == 'win32':
+  torch.cuda.set_device(0)
 
 projectName = "test"
 taskName = "24-10-06"
 
 task = 'train'
 # task = 'export'
+# task = 'valid'
 
 if __name__ == "__main__":
   if task == 'train':
@@ -31,3 +35,9 @@ if __name__ == "__main__":
     # Export the model saved_model
     model.export(format="openvino")
     # model.export(format="saved_model")
+  elif task == 'valid':
+    # Load a model
+    model = YOLO(f"./projects/{projectName}/output/{taskName}/weights/best.pt")
+    # Validate the model
+    metrics = model.val()
+    print(metrics.box.map)  # map50-95
